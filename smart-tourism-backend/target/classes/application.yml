@@ -1,0 +1,75 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/smart_tourism?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 50MB
+
+# 文件上传配置
+upload:
+  path: uploads
+  url-prefix: /uploads
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+sa-token:
+  token-name: Authorization
+  timeout: 86400
+  active-timeout: -1
+  is-concurrent: true
+  is-share: true
+  token-style: uuid
+  is-log: false
+
+# SiliconFlow API Configuration (兼容 OpenAI 格式)
+deepseek:
+  api-key: sk-cimilsgawunyxffxtkaolvcaejhpjfzcdvwlrlzazqgubmxo
+  base-url: https://api.siliconflow.cn/v1
+
+# Amap Configuration
+amap:
+  key: ce9e34be95d07974a6cd953d1934ce7e
+
+# 电子门票配置
+ticket:
+  validity-days: 30              # 门票有效期（天）
+  qr-code-size: 300              # 二维码尺寸（像素）
+  secret-key: ${TICKET_SECRET:DEFAULT_SECRET_KEY_CHANGE_IN_PRODUCTION}   # 签名密钥（建议使用环境变量）
+# Alipay Configuration (沙箱环境)
+alipay:
+  # 应用ID (从支付宝开放平台获取)
+  app-id: 9021000159648843
+  # 商户私钥 (使用支付宝密钥生成工具生成)
+  private-key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCUO5tUmHEjAq4/v2/RsUfc6NAmj8pq4zgMjHSJXqfWxGDVsHbS7Y//R8YRC1R+RVmiruzlFvfJSckpFpyOlQWeky2MSVsXvS1hjpeQW59hMXUuFtdH61xnk7SdEgZX9VQxT7Hbu3TVTMxf8cGeKm/ELpywZXxEGVrGizM7HPafQqWNZzW3I8VGVpx8RSqIr6QQmZuQ/K4WDEwGLQM7+rA8JFN2cstT7KRsYdX28dwW2dS8oJEuQj2+vuc8LjFxsJdRumcqKITP2s28wQdxg+8/bg0WuhWhBwehtWy/oJkrRKYsTCYrpsBFwDDdT9uL0/8abXXdt5qy2lLdctupWMDjAgMBAAECggEAFDfpIOnGDLtx3voSm2xt2+DZe1kDh/7EB1olDxOdGvsgJiVyn6SNjolQp8R+2tZEup7Xawvt8kOhL3yJEB2dbZqvjMH4rc084mCbpbIJlC01yXqOFJ4ytWH9MatiuB6bRDqVjN4NuoZGHhQQj61EH2MoNhsxjuxSaGBWNYrmzKQKX/RpG9LrItNyXhcl9tPyMNZqx4YE/auXCiL+M3WYKUVKgxqFCRzZTLkN9nelEbVvdw4krXa1KGMji0QyC/M2w0g1z3+pWmqD3kDFtcVZWhQgLPf2y6HpXr43fPcn1iVNRYi/JCDjLX8gENGOmFD7//Ru5AmsMjflDkAyEOyZeQKBgQDGqIJFCkvA4G14G2vQjZnwuhl856KbZZphVJ0i70UdajmJSDhMrgkKF8i9/kf7KhbPQOVeK859YyphfWB0hgIoCYmCq44WygwYFVrS4fSazt2kwT3QXpH+gWT0sgg7ZSokKk+3Yg+BeqJM5e9VMr8wNPfQVFrSvfMhBCBbri39zwKBgQC/BQEXC0sAigku349Ru8vQAuMbBrDN79zchn0btjDfkz44V37ogbF5PI9k6H550OHNicZ9kSWi4s2LNCSs9vx0TuSncgvJD/pYunuZcFeYgFSLsyh7HJOmcprO2fECHzGxcBnL7HFvAn663yGJanoX+9BZbjJq/8EnpkCmJyMErQKBgQDEUXBzQ+p60A6+W/Le5aCUeYSIn+xcvzqiJtkm1eeqWvhDB4DDnlVGiRyTTX/a4Mwrwoko2Ae2d9JBB4LThD8LS+l9nYXMVZ1AC5J2xl9QwU/d6i3pBhwms76N5oYmFCJiHQIsSpbiMMvFTJGI056GyEGBumsKyjZDkW1czLOclwKBgBz7zWaJuB+k0i/ijASC0jIFvh/jrAATXRe48FK8Gj5SQSabYA43X45dugQ9orMpFpnxRcTXuTY146ozhz0XXMbpEZi2nUMswXelFAv8F85z6mAoFwRXGbAvw32PZBpGUWvy7ncasTt+zWvdX2FSXqQ0+TAYoF3L4Kr7duO/HHkhAoGAUb6mN9pfSIZx29IkcU6M4yhvtVaimnb52vtS7GeDTIuQr2+564cSVhEZqrcdCqORVVZp/OmyYmRKCPOHNL+rT+L8artySdWQ/UMxWz2AM/BOVDwGBGIuypMh2Rf/URVC4mWf26/X4xJNtzpTkTdO8kayNW8GEEU2qkJUE1bU070=
+  # 支付宝公钥 (从支付宝开放平台获取)
+  public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgFxF2gSbhgHsfy9a5wDcfIF+GD6b0lze8qKa+kbddepGAEVkDCieFb/kAFeVoCac3ElgOQIWDDt/875kpZvX0Jvuof26BirakNKHWMLI+EwBHV8W6b8CFkUjF+y8/hB3n++vtm0TCPbQccNF7MB6UV5V1H6p2DB9sae0jEIm/0QATDSbgM31rB0OeD3mAGA8WXJUUCuE8qUC/SZGPGVKabWzrL3y1dVCyfZescd84W9NPvLkWiOq8pimM4N3AO2Ll8nzymAbm3Y40NJg4Fn7shUikwMJ+qGmxTcBCVXcSRiyg3dBKyvr0euq20woQ+y+mYayK3yEnVFD7zLaNBftJwIDAQAB
+  # 服务器异步通知页面路径
+  notify-url: http://您的服务器地址/api/payment/alipay/notify
+  # 页面跳转同步通知页面路径
+  return-url: http://localhost:3000/payment/result
+  # 签名方式
+  sign-type: RSA2
+  # 字符编码格式
+  charset: UTF-8
+  # 支付宝网关（沙箱环境）
+  gateway-url: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+  # 格式
+  format: json

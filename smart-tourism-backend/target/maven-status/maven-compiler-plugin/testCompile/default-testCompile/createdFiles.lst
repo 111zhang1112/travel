@@ -1,0 +1,6 @@
+com\tourism\service\ScenicSpotServicePropertyTest.class
+com\tourism\service\HotelServicePropertyTest.class
+com\tourism\service\UserServicePropertyTest.class
+com\tourism\BCryptPasswordGenerator.class
+com\tourism\PasswordTest.class
+com\tourism\service\OrderServicePropertyTest.class

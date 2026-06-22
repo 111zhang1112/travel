@@ -1,0 +1,10 @@
+// API 统一导出
+export * from './auth'
+export * from './scenic'
+export * from './hotel'
+export * from './guide'
+export * from './order'
+export * from './ai'
+export * from './recommend'
+export * from './admin'
+export * from './system'
