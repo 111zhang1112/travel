@@ -1,6 +1,7 @@
 package com.tourism.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.tourism.common.Result;
 import com.tourism.dto.HotSearchDTO;
 import com.tourism.dto.SearchSuggestionDTO;
 import com.tourism.dto.SearchStatisticsDTO;
@@ -9,8 +10,11 @@ import com.tourism.service.SearchHistoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -174,22 +178,14 @@ public class SearchHistoryController {
      * 获取热门搜索
      */
     @GetMapping("/hot")
-    public ResponseEntity<Map<String, Object>> getHotSearches(
+    public Result<List<HotSearchDTO>> getHotSearches(
             @RequestParam(required = false, defaultValue = "10") Integer limit) {
-        Map<String, Object> response = new HashMap<>();
-        
         try {
             List<HotSearchDTO> hotSearches = searchHistoryService.getHotSearches(limit);
-            
-            response.put("success", true);
-            response.put("data", hotSearches);
-            return ResponseEntity.ok(response);
-            
+            return Result.success(hotSearches);
         } catch (Exception e) {
             log.error("获取热门搜索失败", e);
-            response.put("success", false);
-            response.put("message", "获取热门搜索失败：" + e.getMessage());
-            return ResponseEntity.internalServerError().body(response);
+            return Result.error("获取热门搜索失败：" + e.getMessage());
         }
     }
     
@@ -197,30 +193,19 @@ public class SearchHistoryController {
      * 获取搜索建议
      */
     @GetMapping("/suggestions")
-    public ResponseEntity<Map<String, Object>> getSearchSuggestions(
+    public Result<List<SearchSuggestionDTO>> getSearchSuggestions(
             @RequestParam String keyword,
             @RequestParam(required = false, defaultValue = "8") Integer limit) {
-        Map<String, Object> response = new HashMap<>();
-        
         try {
             if (keyword == null || keyword.trim().isEmpty()) {
-                response.put("success", true);
-                response.put("data", List.of());
-                return ResponseEntity.ok(response);
+                return Result.success(List.of());
             }
-            
-            List<SearchSuggestionDTO> suggestions = 
+            List<SearchSuggestionDTO> suggestions =
                 searchHistoryService.getSearchSuggestions(keyword.trim(), limit);
-            
-            response.put("success", true);
-            response.put("data", suggestions);
-            return ResponseEntity.ok(response);
-            
+            return Result.success(suggestions);
         } catch (Exception e) {
             log.error("获取搜索建议失败", e);
-            response.put("success", false);
-            response.put("message", "获取搜索建议失败：" + e.getMessage());
-            return ResponseEntity.internalServerError().body(response);
+            return Result.error("获取搜索建议失败：" + e.getMessage());
         }
     }
     
