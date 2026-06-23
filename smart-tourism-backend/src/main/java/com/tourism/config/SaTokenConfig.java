@@ -22,6 +22,8 @@ public class SaTokenConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SaInterceptor(handle -> {
+            // 放行 OPTIONS 预检请求
+            SaRouter.match(cn.dev33.satoken.router.SaHttpMethod.OPTIONS).back();
             // 登录校验 - 排除公开接口
             SaRouter.match("/**")
                     .notMatch(
