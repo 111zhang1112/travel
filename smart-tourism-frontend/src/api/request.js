@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 import router from '@/router'
 
 // 创建 axios 实例
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://travelbackend-production-7526.up.railway.app/api'
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://travel-production-6e30.up.railway.app/api'
 const request = axios.create({
   baseURL: BASE_URL,
   timeout: 30000
